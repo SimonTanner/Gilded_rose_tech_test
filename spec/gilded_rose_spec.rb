@@ -2,6 +2,15 @@ require File.join(File.dirname(__FILE__), '../lib/gilded_rose')
 
 describe GildedRose do
 
+  describe "#items_classify_type" do
+    it "classifies an item by it's type and stores it in an array stored in a hash table with the key as the type of object" do
+      items = [Item.new("Aged Brie", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      gilded_rose.items_classify_type()
+      expect(gilded_rose.items_by_type['brie']).to include(items[0])
+    end
+  end
+
   describe "#update_quality" do
     it "does not change the name" do
       items = [Item.new("foo", 0, 0)]

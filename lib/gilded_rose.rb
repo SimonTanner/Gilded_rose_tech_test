@@ -1,7 +1,25 @@
 class GildedRose
+  attr_reader :items_by_type
 
   def initialize(items)
     @items = items
+    @items_by_type = {"brie" => [], "sulfuras" => [], "backstage passes" => [], "other" => []}
+    items_by_type()
+  end
+
+  def items_classify_type()
+    @items.each do |item|
+      @items_by_type.keys.each do |type|
+        if item.name.downcase.include? type
+          @items_by_type[type].push(item)
+          break
+        else
+          @items_by_type["other"].push(item)
+          break
+        end
+      end
+    end
+    items_by_type = @items_by_type
   end
 
   def update_quality()
