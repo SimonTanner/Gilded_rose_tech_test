@@ -1,6 +1,5 @@
 #!/usr/bin/ruby -w
-
-require File.join(File.dirname(__FILE__), '/lib/gilded_rose')
+require File.expand_path('../lib/gilded_rose', File.dirname(__FILE__))
 
 puts "OMGHAI!"
 items = [
