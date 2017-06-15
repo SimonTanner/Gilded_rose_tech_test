@@ -14,6 +14,14 @@ class GildedRose
     items_by_type = @items_by_type
   end
 
+  def update_brie()
+    @items_by_type['brie'].each do |brie|
+      if brie.quality < 50
+        brie.quality += 1
+        brie.sell_in -= 1
+      end
+    end
+  end
 
   def update_quality()
     @items.each do |item|

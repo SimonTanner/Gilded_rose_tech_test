@@ -10,6 +10,15 @@ describe GildedRose do
     end
   end
 
+  describe "#update_brie" do
+    it "updates the quality of any item classified as a type of brie" do
+      items = [Item.new("Aged Brie", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      gilded_rose.update_brie()
+      expect(items[0].quality).to eq(7)
+    end
+  end
+
   describe "#update_quality" do
     it "does not change the name" do
       items = [Item.new("foo", 0, 0)]
