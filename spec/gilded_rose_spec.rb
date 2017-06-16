@@ -80,6 +80,16 @@ describe GildedRose do
       2.times { @gilded_rose.update_backstage_passes() }
       expect(@items[0].quality).to eq(12)
     end
+
+    it "increases the value of the pass up to the date of the event" do
+      20.times { @gilded_rose.update_backstage_passes() }
+      expect(@items[0].quality).to eq(43)
+    end
+
+    it "the value of the pass drops to zero if the event has already happened" do
+      21.times { @gilded_rose.update_backstage_passes() }
+      expect(@items[0].quality).to eq(0)
+    end
   end
 
   describe "#update_quality" do

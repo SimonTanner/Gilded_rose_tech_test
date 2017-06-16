@@ -31,8 +31,10 @@ class GildedRose
         backstage_pass.quality += 1
       elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5
         backstage_pass.quality += 2
-      elsif backstage_pass.sell_in <= 5
+      elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0
         backstage_pass.quality += 3
+      elsif backstage_pass.sell_in < 0
+        backstage_pass.quality = 0
       end
     end
   end
