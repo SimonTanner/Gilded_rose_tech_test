@@ -64,7 +64,11 @@ class GildedRose
   def update_conjured()
     @items_by_type['conjured'].each do |conjured|
       conjured.sell_in -= 1
-      conjured.quality -= 1
+      if conjured.sell_in >=0
+        conjured.quality -= 1
+      else
+        conjured.quality -= 2
+      end
     end
   end
 

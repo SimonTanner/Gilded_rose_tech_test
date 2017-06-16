@@ -145,6 +145,11 @@ describe GildedRose do
       @gilded_rose.update_conjured()
       expect(@items[0].sell_in).to eq(1)
     end
+
+    it "degrades by 2 each day that it has passed it's sell by date" do
+      3.times { @gilded_rose.update_conjured() }
+      expect(@items[0].quality).to eq(1)
+    end
   end
 
   describe "#update_quality" do
