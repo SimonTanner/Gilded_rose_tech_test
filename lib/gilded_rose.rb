@@ -2,6 +2,8 @@ class GildedRose
   attr_reader :items_by_type
   MAX_QUALITY = 50
   MIN_QUALITY = 0
+  MISC_DEVAL_FACTOR = 1
+  CONJURED_DEVAL_FACTOR = 2
 
   def initialize(items)
     @items = items
@@ -48,33 +50,12 @@ class GildedRose
     end
   end
 
-
   def update_misc()
-    @items_by_type['misc'].each do |misc|
-      misc.sell_in -= 1
-      if misc.quality > 0
-        if misc.sell_in >=0
-          misc.quality -= 1
-        else
-          misc.quality -= 2
-        end
-      else
-        misc.quality = 0
-      end
-    end
+    update_misc_or_conjured('misc')
   end
 
-  def update_conjured()
-    @items_by_type['conjured'].each do |conjured|
-      conjured.sell_in -= 1
-      if conjured.sell_in >= 0 && conjured.quality >= MIN_QUALITY + 1
-        conjured.quality -= 1
-      elsif conjured.sell_in < 0 && conjured.quality >= MIN_QUALITY + 2
-        conjured.quality -= 2
-      else
-        conjured.quality = 0
-      end
-    end
+  def update_conjured(factor = CONJURED_DEVAL_FACTOR)
+    update_misc_or_conjured('conjured', factor)
   end
 
 
@@ -98,6 +79,19 @@ class GildedRose
     end
     if item_matched == false
       @items_by_type["misc"].push(item)
+    end
+  end
+
+  def update_misc_or_conjured(type, factor= MISC_DEVAL_FACTOR)
+    @items_by_type[type].each do |type|
+      type.sell_in -= 1
+      if type.sell_in >= 0 && type.quality >= MIN_QUALITY + 1 * factor
+        type.quality -= 1 * factor
+      elsif type.sell_in < 0 && type.quality >= MIN_QUALITY + 2 * factor
+        type.quality -= 2 * factor
+      else
+        type.quality = 0
+      end
     end
   end
 
