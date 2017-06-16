@@ -90,6 +90,21 @@ describe GildedRose do
       21.times { @gilded_rose.update_backstage_passes() }
       expect(@items[0].quality).to eq(0)
     end
+
+    it "won't increase the value above 50" do
+      @items = [Item.new("Backstage passes", 20, 50)]
+      @gilded_rose = GildedRose.new(@items)
+      2.times { @gilded_rose.update_backstage_passes() }
+      expect(@items[0].quality).to eq(50)
+    end
+  end
+
+  describe "#update_misc" do
+    before(:example) do
+      @items = [Item.new("Backstage passes", 20, 6)]
+      @gilded_rose = GildedRose.new(@items)
+    end
+
   end
 
   describe "#update_quality" do

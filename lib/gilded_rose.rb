@@ -27,14 +27,16 @@ class GildedRose
   def update_backstage_passes()
     @items_by_type['backstage passes'].each do |backstage_pass|
       backstage_pass.sell_in -= 1
-      if backstage_pass.sell_in > 10
-        backstage_pass.quality += 1
-      elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5
-        backstage_pass.quality += 2
-      elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0
-        backstage_pass.quality += 3
-      elsif backstage_pass.sell_in < 0
-        backstage_pass.quality = 0
+      if backstage_pass.quality < MAX_QUALITY
+        if backstage_pass.sell_in > 10
+          backstage_pass.quality += 1
+        elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5
+          backstage_pass.quality += 2
+        elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0
+          backstage_pass.quality += 3
+        elsif backstage_pass.sell_in < 0
+          backstage_pass.quality = 0
+        end
       end
     end
   end
