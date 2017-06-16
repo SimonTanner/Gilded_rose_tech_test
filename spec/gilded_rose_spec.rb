@@ -110,6 +110,11 @@ describe GildedRose do
       expect(@items[0].quality).to eq(19)
     end
 
+    it "decreases the value of a miscallaneous item by 2 each day if the sell_in date is passed" do
+      14.times { @gilded_rose.update_misc() }
+      expect(@items[0].quality).to eq(2)
+    end
+
   end
 
   describe "#update_quality" do
