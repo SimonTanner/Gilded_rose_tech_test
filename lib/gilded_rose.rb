@@ -1,6 +1,7 @@
 class GildedRose
   attr_reader :items_by_type
   MAX_QUALITY = 50
+  MIN_QUALITY = 0
 
   def initialize(items)
     @items = items
@@ -66,12 +67,10 @@ class GildedRose
   def update_conjured()
     @items_by_type['conjured'].each do |conjured|
       conjured.sell_in -= 1
-      if conjured.quality > 0
-        if conjured.sell_in >=0
-          conjured.quality -= 1
-        else
-          conjured.quality -= 2
-        end
+      if conjured.sell_in >= 0 && conjured.quality >= MIN_QUALITY + 1
+        conjured.quality -= 1
+      elsif conjured.sell_in < 0 && conjured.quality >= MIN_QUALITY + 2
+        conjured.quality -= 2
       else
         conjured.quality = 0
       end

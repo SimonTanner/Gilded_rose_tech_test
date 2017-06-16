@@ -152,8 +152,10 @@ describe GildedRose do
     end
 
     it "will not decrease the value below 0" do
-      10.times { @gilded_rose.update_conjured() }
-      expect(@items[0].quality).to eq(0)
+      10.times do
+        @gilded_rose.update_conjured()
+        expect(@items[0].quality).to be >= 0
+      end
     end
 
   end
