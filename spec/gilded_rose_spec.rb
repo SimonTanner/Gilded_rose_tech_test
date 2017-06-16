@@ -7,15 +7,32 @@ describe GildedRose do
       items = [Item.new("Aged Brie", 5, 6)]
       gilded_rose = GildedRose.new(items)
       expect(gilded_rose.items_by_type['brie']).to include(items[0])
+
+      items = [Item.new("Backstage passes", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      expect(gilded_rose.items_by_type['backstage passes']).to include(items[0])
     end
   end
 
   describe "#update_brie" do
+    before(:example) do
+      @items = [Item.new("Aged Brie", 5, 6)]
+      @gilded_rose = GildedRose.new(@items)
+    end
+
     it "updates the quality of any item classified as a type of brie" do
-      items = [Item.new("Aged Brie", 5, 6)]
-      gilded_rose = GildedRose.new(items)
-      gilded_rose.update_brie()
-      expect(items[0].quality).to eq(7)
+      @gilded_rose.update_brie()
+      expect(@items[0].quality).to eq(7)
+    end
+
+    it "will not increase the quality of the brie above 50" do
+      50.times {@gilded_rose.update_brie()}
+      expect(@items[0].quality).to eq(50)
+    end
+
+    it "decreases the sellin no. by 1 each time it is called" do
+      5.times {@gilded_rose.update_brie()}
+      expect(@items[0].sell_in).to eq(0)
     end
   end
 

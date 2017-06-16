@@ -74,14 +74,17 @@ class GildedRose
   private
 
   def item_type_match(item)
+    item_matched = false
     @items_by_type.keys.each do |type|
-      if item.name.downcase.include? type
+      item_name = item.name.downcase
+        if item_name.include? type.to_s || item_name == type
         @items_by_type[type].push(item)
-        break
-      else
-        @items_by_type["misc"].push(item)
+        item_matched = true
         break
       end
+    end
+    if item_matched == false
+      @items_by_type["misc"].push(item)
     end
   end
 
