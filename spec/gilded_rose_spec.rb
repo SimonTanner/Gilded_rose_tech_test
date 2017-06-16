@@ -51,6 +51,11 @@ describe GildedRose do
       5.times {@gilded_rose.update_brie()}
       expect(@items[0].sell_in).to eq(0)
     end
+
+    it "decreases the sellin no. by 1 each time it is called" do
+      10.times {@gilded_rose.update_brie()}
+      expect(@items[0].quality).to eq(21)
+    end
   end
 
   describe "#update_backstage_passes" do
@@ -92,7 +97,7 @@ describe GildedRose do
     end
 
     it "won't increase the value above 50" do
-      @items = [Item.new("Backstage passes", 20, 50)]
+      @items = [Item.new("Backstage passes", 5, 46)]
       @gilded_rose = GildedRose.new(@items)
       2.times { @gilded_rose.update_backstage_passes() }
       expect(@items[0].quality).to eq(50)
@@ -136,7 +141,7 @@ describe GildedRose do
       expect(items[0].quality).to eq(0)
     end
 
-    it "if the item is 'Aged Brie' the quality increases by 1 each day" do
+    it "if the item is 'Aged Brie' the quality increases by 2 each day, once passed it's sell by date" do
       items = [Item.new("Aged Brie", 0, 0)]
       gilded_rose = GildedRose.new(items)
       5.times { gilded_rose.update_quality() }

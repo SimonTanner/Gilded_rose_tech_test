@@ -17,26 +17,32 @@ class GildedRose
 
   def update_brie()
     @items_by_type['brie'].each do |brie|
-      if brie.quality < MAX_QUALITY
-        brie.quality += 1
-      end
       brie.sell_in -= 1
+      if brie.sell_in >= 0 && brie.quality <= MAX_QUALITY - 1
+        brie.quality += 1
+      elsif brie.sell_in < 0 && brie.quality <= MAX_QUALITY - 2
+        brie.quality += 2
+      elsif brie.sell_in < 0 && brie.quality >= MAX_QUALITY - 2
+        brie.quality = MAX_QUALITY
+      end
     end
   end
 
   def update_backstage_passes()
     @items_by_type['backstage passes'].each do |backstage_pass|
       backstage_pass.sell_in -= 1
-      if backstage_pass.quality < MAX_QUALITY
-        if backstage_pass.sell_in > 10
-          backstage_pass.quality += 1
-        elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5
-          backstage_pass.quality += 2
-        elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0
-          backstage_pass.quality += 3
-        elsif backstage_pass.sell_in < 0
-          backstage_pass.quality = 0
-        end
+      if backstage_pass.sell_in > 10 && backstage_pass.quality < 50
+        backstage_pass.quality += 1
+      elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5 && backstage_pass.quality <= MAX_QUALITY - 2
+        backstage_pass.quality += 2
+      elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0 && backstage_pass.quality <= MAX_QUALITY - 3
+        backstage_pass.quality += 3
+      elsif backstage_pass.sell_in < 0
+        backstage_pass.quality = 0
+      elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5 && backstage_pass.quality >= MAX_QUALITY - 2
+        backstage_pass.quality = MAX_QUALITY
+      elsif backstage_pass.sell_in <= 5 && backstage_pass.sell_in >= 0 && backstage_pass.quality >= MAX_QUALITY - 3
+        backstage_pass.quality = MAX_QUALITY
       end
     end
   end
@@ -57,51 +63,9 @@ class GildedRose
 
 
   def update_quality()
-    @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
-      else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-      if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
-      end
-      if item.sell_in < 0
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
-          end
-        end
-      end
-    end
+    update_brie()
+    update_backstage_passes()
+    update_misc()
   end
 
   private
