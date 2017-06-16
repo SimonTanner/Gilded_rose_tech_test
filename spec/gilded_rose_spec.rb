@@ -101,8 +101,13 @@ describe GildedRose do
 
   describe "#update_misc" do
     before(:example) do
-      @items = [Item.new("Backstage passes", 20, 6)]
+      @items = [Item.new("+5 Dexterity Vest", 10, 20)]
       @gilded_rose = GildedRose.new(@items)
+    end
+
+    it "decreases the value of a miscallaneous item by 1 each day if the sell_in date is positive" do
+      @gilded_rose.update_misc()
+      expect(@items[0].quality).to eq(19)
     end
 
   end

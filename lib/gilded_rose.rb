@@ -41,6 +41,12 @@ class GildedRose
     end
   end
 
+  def update_misc()
+    @items_by_type['misc'].each do |misc|
+      misc.quality -= 1
+    end
+  end
+
   def update_quality()
     @items.each do |item|
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
@@ -96,10 +102,10 @@ class GildedRose
     @items_by_type.keys.each do |type|
       item_name = item.name.downcase
         if item_name.include? type.to_s || item_name == type
-        @items_by_type[type].push(item)
-        item_matched = true
-        break
-      end
+          @items_by_type[type].push(item)
+          item_matched = true
+          break
+        end
     end
     if item_matched == false
       @items_by_type["misc"].push(item)
