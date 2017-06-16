@@ -27,13 +27,13 @@ class GildedRose
   def update_backstage_passes()
     @items_by_type['backstage passes'].each do |backstage_pass|
       backstage_pass.sell_in -= 1
-      if backstage_pass.sell_in >= 10
+      if backstage_pass.sell_in > 10
         backstage_pass.quality += 1
-      else
+      elsif backstage_pass.sell_in <= 10 && backstage_pass.sell_in > 5
         backstage_pass.quality += 2
+      elsif backstage_pass.sell_in <= 5
+        backstage_pass.quality += 3
       end
-
-
     end
   end
 

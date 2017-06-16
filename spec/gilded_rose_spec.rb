@@ -71,7 +71,14 @@ describe GildedRose do
 
     it "increases in value by 2 per day if there are less than ten days until the event" do
       11.times { @gilded_rose.update_backstage_passes() }
-      expect(@items[0].quality).to eq(18)
+      expect(@items[0].quality).to eq(19)
+    end
+
+    it "increases in value by 2 per day if there are less than ten days until the event" do
+      @items = [Item.new("Backstage passes", 5, 6)]
+      @gilded_rose = GildedRose.new(@items)
+      2.times { @gilded_rose.update_backstage_passes() }
+      expect(@items[0].quality).to eq(12)
     end
   end
 
