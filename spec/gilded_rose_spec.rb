@@ -134,28 +134,30 @@ describe GildedRose do
 
   describe "#update_conjured" do
     before(:example) do
-      @factor = 1
       @init_qual = 5
       @items = [Item.new("Conjured Mana Cake", 2, @init_qual)]
       @gilded_rose = GildedRose.new(@items)
+      @factor = GildedRose::CONJURED_DEVAL_FACTOR
+      @factor_times_2 = 2 * @factor
     end
 
-    it "degrades by 1 each day that it hasn't passed it's sell by date" do
+    it "degrades by #{@factor} each day that it hasn't passed it's sell by date" do
       @gilded_rose.update_conjured(@factor)
       expect(@items[0].quality).to eq(@init_qual - @factor)
     end
 
-    it "degrades by 1 each day that it hasn't passed it's sell by date" do
+    it "it's sell_in no. decreases by 1 each day" do
       @gilded_rose.update_conjured(@factor)
       expect(@items[0].sell_in).to eq(1)
     end
 
-    it "degrades by 2 each day that it has passed it's sell by date" do
-      3.times do
+    it "degrades by #{@factor_times_2} each day that it has passed it's sell by date" do
+      final_qual = @init_qual
+      2.times do
         @gilded_rose.update_conjured(@factor)
-        @init_qual - @factor
+        final_qual -= @factor
       end
-      expect(@items[0].quality).to eq(1)
+      expect(@items[0].quality).to eq(final_qual)
     end
 
     it "will not decrease the value below 0" do
@@ -200,6 +202,10 @@ describe GildedRose do
       gilded_rose = GildedRose.new(items)
       10.times { gilded_rose.update_quality() }
       expect(items[0].quality).to eq(45)
+    end
+
+    it "if the item is conjured, it decreases by " do
+
     end
 
   end
