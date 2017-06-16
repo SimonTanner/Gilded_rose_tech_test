@@ -19,6 +19,10 @@ describe GildedRose do
       items = [Item.new("Carrots", 5, 6)]
       gilded_rose = GildedRose.new(items)
       expect(gilded_rose.items_by_type['misc']).to include(items[0])
+
+      items = [Item.new("Conjured Mana Cake", 2, 5)]
+      gilded_rose = GildedRose.new(items)
+      expect(gilded_rose.items_by_type['conjured']).to include(items[0])
     end
 
     it "can be passed multiple items of different types in one assignment" do
@@ -52,7 +56,7 @@ describe GildedRose do
       expect(@items[0].sell_in).to eq(0)
     end
 
-    it "decreases the sellin no. by 1 each time it is called" do
+    it "increases the quality by 2 once the sell by date has passed" do
       10.times {@gilded_rose.update_brie()}
       expect(@items[0].quality).to eq(21)
     end
@@ -124,7 +128,18 @@ describe GildedRose do
       16.times { @gilded_rose.update_misc() }
       expect(@items[0].quality).to eq(0)
     end
+  end
 
+  describe "#update_conjured" do
+    before(:example) do
+      @items = [Item.new("Conjured Mana Cake", 2, 5)]
+      @gilded_rose = GildedRose.new(@items)
+    end
+
+    it "degrades by 1 each day that it hasn't passed it's sell by date" do
+      @gilded_rose.update_conjured()
+      expect(@items[0].quality).to eq(4)
+    end
   end
 
   describe "#update_quality" do

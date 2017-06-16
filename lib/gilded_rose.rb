@@ -4,7 +4,7 @@ class GildedRose
 
   def initialize(items)
     @items = items
-    @items_by_type = {"brie" => [], "sulfuras" => [], "backstage passes" => [], "misc" => []}
+    @items_by_type = {"brie" => [], "sulfuras" => [], "backstage passes" => [], "conjured" => [], "misc" => []}
     items_classify_type(@items)
   end
 
@@ -58,6 +58,12 @@ class GildedRose
           misc.quality -= 2
         end
       end
+    end
+  end
+
+  def update_conjured()
+    @items_by_type['conjured'].each do |conjured|
+      conjured.quality -= 1
     end
   end
 
