@@ -11,6 +11,23 @@ describe GildedRose do
       items = [Item.new("Backstage passes", 5, 6)]
       gilded_rose = GildedRose.new(items)
       expect(gilded_rose.items_by_type['backstage passes']).to include(items[0])
+
+      items = [Item.new("Sulfuras", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      expect(gilded_rose.items_by_type['sulfuras']).to include(items[0])
+
+      items = [Item.new("Carrots", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      expect(gilded_rose.items_by_type['misc']).to include(items[0])
+    end
+
+    it "can be passed multiple items of different types in one assignment" do
+      items = [Item.new("Aged Brie", 5, 6), Item.new("Backstage passes", 5, 6), Item.new("Sulfuras", 5, 6), Item.new("Carrots", 5, 6)]
+      gilded_rose = GildedRose.new(items)
+      expect(gilded_rose.items_by_type['brie']).to include(items[0])
+      expect(gilded_rose.items_by_type['backstage passes']).to include(items[1])
+      expect(gilded_rose.items_by_type['sulfuras']).to include(items[2])
+      expect(gilded_rose.items_by_type['misc']).to include(items[3])
     end
   end
 
