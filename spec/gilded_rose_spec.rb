@@ -53,6 +53,23 @@ describe GildedRose do
     end
   end
 
+  describe "#update_backstage_passes" do
+    before(:example) do
+      @items = [Item.new("Backstage passes", 20, 6)]
+      @gilded_rose = GildedRose.new(@items)
+    end
+
+    it "decreases the sell_in value by one each day" do
+      @gilded_rose.update_backstage_passes()
+      expect(@items[0].sell_in).to eq(19)
+    end
+
+    it "increases in value by 1 per day if there are more than ten days until the event" do
+      @gilded_rose.update_backstage_passes()
+      expect(@items[0].quality).to eq(7)
+    end
+  end
+
   describe "#update_quality" do
     it "does not change the name" do
       items = [Item.new("foo", 0, 0)]

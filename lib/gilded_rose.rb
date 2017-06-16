@@ -1,5 +1,6 @@
 class GildedRose
   attr_reader :items_by_type
+  MAX_QUALITY = 50
 
   def initialize(items)
     @items = items
@@ -16,10 +17,17 @@ class GildedRose
 
   def update_brie()
     @items_by_type['brie'].each do |brie|
-      if brie.quality < 50
+      if brie.quality < MAX_QUALITY
         brie.quality += 1
-        brie.sell_in -= 1
       end
+      brie.sell_in -= 1
+    end
+  end
+
+  def update_backstage_passes()
+    @items_by_type['backstage passes'].each do |backstage_pass|
+      backstage_pass.sell_in -= 1
+      backstage_pass.quality += 1
     end
   end
 
