@@ -68,6 +68,11 @@ describe GildedRose do
       @gilded_rose.update_backstage_passes()
       expect(@items[0].quality).to eq(7)
     end
+
+    it "increases in value by 2 per day if there are less than ten days until the event" do
+      11.times { @gilded_rose.update_backstage_passes() }
+      expect(@items[0].quality).to eq(18)
+    end
   end
 
   describe "#update_quality" do
