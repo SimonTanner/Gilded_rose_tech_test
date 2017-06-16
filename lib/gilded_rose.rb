@@ -41,16 +41,20 @@ class GildedRose
     end
   end
 
+
   def update_misc()
     @items_by_type['misc'].each do |misc|
       misc.sell_in -= 1
-      if misc.sell_in >=0
-        misc.quality -= 1
-      else
-        misc.quality -= 2
+      if misc.quality > 0
+        if misc.sell_in >=0
+          misc.quality -= 1
+        else
+          misc.quality -= 2
+        end
       end
     end
   end
+
 
   def update_quality()
     @items.each do |item|

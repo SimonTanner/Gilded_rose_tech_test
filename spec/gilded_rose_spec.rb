@@ -115,6 +115,11 @@ describe GildedRose do
       expect(@items[0].quality).to eq(2)
     end
 
+    it "the value cannot decrease below 0" do
+      16.times { @gilded_rose.update_misc() }
+      expect(@items[0].quality).to eq(0)
+    end
+
   end
 
   describe "#update_quality" do
