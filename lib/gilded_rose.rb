@@ -63,6 +63,7 @@ class GildedRose
 
   def update_conjured()
     @items_by_type['conjured'].each do |conjured|
+      conjured.sell_in -= 1
       conjured.quality -= 1
     end
   end
